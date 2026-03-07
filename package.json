@@ -1,0 +1,48 @@
+{
+  "name": "pr406",
+  "version": "0.1.0",
+  "description": "GitHub Action to detect and respond to likely AI-generated low-quality PRs using transparent heuristics.",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rm -rf dist coverage artifacts/e2e",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "npm run clean && npm run lint && npm run typecheck && npm run test && ncc build src/main.ts -o dist",
+    "calibrate": "tsx scripts/calibration/evaluate.ts",
+    "e2e": "tsx scripts/e2e/run.ts",
+    "validate": "npm run build && npm run calibrate"
+  },
+  "keywords": [
+    "github-action",
+    "pr-review",
+    "heuristics",
+    "ai-generated"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.1",
+    "js-yaml": "^4.1.0"
+  },
+  "overrides": {
+    "undici": "^6.23.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^24.10.1",
+    "@typescript-eslint/eslint-plugin": "^8.47.0",
+    "@typescript-eslint/parser": "^8.47.0",
+    "@vercel/ncc": "^0.38.4",
+    "eslint": "^9.39.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.0"
+  }
+}

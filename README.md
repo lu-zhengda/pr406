@@ -1,0 +1,123 @@
+# pr406
+
+`pr406` is a GitHub Action that scores pull requests with transparent structural heuristics and applies a standardized 406-style maintainer response when a configurable threshold is exceeded.
+
+## What It Detects (v0.1)
+
+The action scores these heuristics:
+
+- first PR from contributor (+1)
+- single commit touching more than 5 files (+2)
+- code changes without test changes (+2)
+- generic commit message pattern (+1)
+- fork-to-PR time under 60 seconds (+3)
+- generic/empty PR description (+1)
+- no prior issue/discussion participation (+1)
+
+Default threshold: `7`.
+
+## Safe Defaults
+
+- `dry_run: true` by default
+- no auto-close unless explicitly enabled
+- contributor override token: `[human-authored]`
+- fail-open behavior when a signal cannot be fetched
+
+## Quick Start
+
+1. Add workflow:
+
+```yaml
+name: pr406
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, edited]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  pr406:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+      - uses: your-org/pr406@v0.1.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          config_path: .github/pr406.yml
+```
+
+2. Add config at `.github/pr406.yml` (example in this repo).
+
+3. Start in dry-run mode, then enable enforcement:
+
+```yaml
+dry_run: false
+close_on_trigger: false
+```
+
+## Config Reference
+
+```yaml
+threshold: 7
+dry_run: true
+label: ai-generated
+close_on_trigger: false
+request_human_review: false
+human_override_token: "[human-authored]"
+response_template: |
+  <!-- pr406:comment-v1 -->
+  ...
+```
+
+## Outputs
+
+- `decision`: `allow` | `flagged` | `overridden`
+- `score`: numeric total
+- `triggered_heuristics`: comma-separated ids
+- `report_json`: complete structured report
+
+## Tuning Guide
+
+- Keep `dry_run: true` for at least one week.
+- Review false positives by checking `report_json` in job logs.
+- Raise `threshold` if too many legitimate PRs are flagged.
+- Enable `close_on_trigger` only after low false-positive confidence.
+
+## Human Override
+
+Contributors can add `[human-authored]` to the PR description. This suppresses automated enforcement and records decision `overridden`.
+
+## Autonomous E2E Validation
+
+Run the complete autonomous loop (3 consecutive green iterations):
+
+```bash
+E2E_OWNER=... E2E_CONTRIBUTOR=... GH_MAINTAINER_TOKEN=... GH_CONTRIB_TOKEN=... npm run e2e
+```
+
+Artifacts:
+
+- `artifacts/e2e/latest-summary.json`
+- `artifacts/e2e/latest-log.md`
+
+## Development
+
+```bash
+npm ci
+npm run validate
+```
+
+`npm run validate` executes lint, typecheck, tests, build, and calibration gate checks.
+
+## Project Policies
+
+- Security reporting: `SECURITY.md`
+- Contribution guide: `CONTRIBUTING.md`
+- Community conduct: `CODE_OF_CONDUCT.md`
+- License: `LICENSE` (MIT)

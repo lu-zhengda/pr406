@@ -1,0 +1,16 @@
+threshold: 7
+dry_run: true
+label: ai-generated
+close_on_trigger: false
+request_human_review: false
+human_override_token: "[human-authored]"
+response_template: |
+  <!-- pr-406:comment-v1 -->
+
+  406 Not Acceptable: this pull request appears to match our automated low-confidence contribution patterns.
+
+  - Score: `{{score}} / threshold {{threshold}}`
+  - Triggered heuristics: {{triggered_heuristics}}
+  - Decision: `{{decision}}`
+
+  If this PR is human-authored, add `{{override_token}}` to the PR description and request maintainer review.

@@ -1,0 +1,11 @@
+node_modules/
+coverage/
+artifacts/
+.tmp/
+*.log
+.DS_Store
+pr406.md
+implementation-plan.md
+product-plan.md
+*implementation-plan*.md
+*product-plan*.md

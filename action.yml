@@ -1,0 +1,33 @@
+name: pr406
+
+description: Detect and respond to likely AI-generated low-quality pull requests using transparent heuristics.
+
+author: pr406
+
+inputs:
+  github_token:
+    description: GitHub token with permissions to read PR metadata and optionally comment/label/close PRs.
+    required: false
+    default: ${{ github.token }}
+  config_path:
+    description: Path to repository configuration file.
+    required: false
+    default: .github/pr406.yml
+
+outputs:
+  decision:
+    description: Final decision (allow, flagged, overridden).
+  score:
+    description: Numeric heuristic score.
+  triggered_heuristics:
+    description: Comma-separated list of triggered heuristic IDs.
+  report_json:
+    description: Full JSON report payload for automation.
+
+runs:
+  using: node20
+  main: dist/index.js
+
+branding:
+  icon: shield
+  color: red
