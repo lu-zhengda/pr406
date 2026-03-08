@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.1 - 2026-03-08
+
+### Changed
+
+- Updated Action metadata name to `ai-pr-406` for GitHub Marketplace uniqueness requirements.
+
 ## v0.1.0 - 2026-03-07
 
 Initial release of `pr406` (heuristics-only).

@@ -1,4 +1,4 @@
-name: pr406
+name: ai-pr-406
 
 description: Detect and respond to likely AI-generated low-quality pull requests using transparent heuristics.
 
