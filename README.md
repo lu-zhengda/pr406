@@ -23,9 +23,9 @@ Default threshold: `7`.
 - contributor override token: `[human-authored]`
 - fail-open behavior when a signal cannot be fetched
 
-## Quick Start
+## Install and Use
 
-1. Add workflow:
+1. Add this workflow in your target repository at `.github/workflows/pr406.yml`:
 
 ```yaml
 name: pr406
@@ -46,20 +46,34 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.base.ref }}
-      - uses: your-org/pr406@v0.1.0
+      - uses: lu-zhengda/pr406@v0.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           config_path: .github/pr406.yml
 ```
 
-2. Add config at `.github/pr406.yml` (example in this repo).
-
-3. Start in dry-run mode, then enable enforcement:
+2. Add config at `.github/pr406.yml`:
 
 ```yaml
-dry_run: false
+threshold: 7
+dry_run: true
 close_on_trigger: false
 ```
+
+3. Start with `dry_run: true` for at least a week, then switch to enforcement.
+
+4. If you publish this action under your own account, replace `lu-zhengda/pr406` with your own `<owner>/<repo>`.
+
+Copy-paste examples are included here:
+
+- `examples/workflows/pr406.yml`
+- `examples/pr406.yml`
+
+## Should We Publish a Workflow?
+
+No additional workflow package is required.
+
+This repository publishes the Action. Each consuming repository adds its own workflow file that uses this Action reference (`uses: lu-zhengda/pr406@v0.1.0`).
 
 ## Config Reference
 
