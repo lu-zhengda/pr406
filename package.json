@@ -17,9 +17,14 @@
   },
   "keywords": [
     "github-action",
+    "github-marketplace",
+    "pull-request",
     "pr-review",
+    "maintainer-tooling",
     "heuristics",
-    "ai-generated"
+    "ai-generated",
+    "triage",
+    "moderation"
   ],
   "author": "",
   "license": "MIT",

@@ -1,5 +1,9 @@
 # pr406
 
+[![Release](https://img.shields.io/github/v/release/lu-zhengda/pr406?sort=semver)](https://github.com/lu-zhengda/pr406/releases)
+[![CI](https://img.shields.io/github/actions/workflow/status/lu-zhengda/pr406/ci.yml?branch=main&label=ci)](https://github.com/lu-zhengda/pr406/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/lu-zhengda/pr406)](https://github.com/lu-zhengda/pr406/blob/main/LICENSE)
+
 `pr406` is a GitHub Action that scores pull requests with transparent structural heuristics and applies a standardized 406-style maintainer response when a configurable threshold is exceeded.
 
 ## What It Detects (v0.1)
@@ -46,7 +50,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.base.ref }}
-      - uses: lu-zhengda/pr406@v0.1.0
+      - uses: lu-zhengda/pr406@v0.1.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           config_path: .github/pr406.yml
@@ -73,7 +77,7 @@ Copy-paste examples are included here:
 
 No additional workflow package is required.
 
-This repository publishes the Action. Each consuming repository adds its own workflow file that uses this Action reference (`uses: lu-zhengda/pr406@v0.1.0`).
+This repository publishes the Action. Each consuming repository adds its own workflow file that uses this Action reference (`uses: lu-zhengda/pr406@v0.1.1`).
 
 ## Config Reference
 
